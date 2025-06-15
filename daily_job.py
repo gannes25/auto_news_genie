@@ -1,16 +1,18 @@
 # auto_news_genie/daily_job.py
 
-from utils.fetch_news import get_latest_news
 import json
+import os
+import sys
 
-# This is a simulated daily update job. In a real use-case,
-# you'd store this data in a database or generate static HTML.
+# Add current directory to path for utils
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from utils.fetch_news import get_latest_news
 
-def run_daily_update():
-    news_items = get_latest_news()
-    with open('latest_news.json', 'w', encoding='utf-8') as f:
-        json.dump(news_items, f, ensure_ascii=False, indent=2)
-    print("✅ Daily news updated successfully!")
+def save_daily_news():
+    news = get_latest_news()
+    with open('latest_news.json', 'w') as f:
+        json.dump(news, f, indent=2)
+    print("🗞️ Daily news saved to latest_news.json")
 
 if __name__ == '__main__':
-    run_daily_update()
+    save_daily_news()
