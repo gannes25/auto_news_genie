@@ -2,22 +2,26 @@
 
 import feedparser
 
-RSS_FEEDS = [
-    'https://feeds.bbci.co.uk/news/rss.xml',
-    'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml',
-    'https://www.thehindu.com/news/national/feeder/default.rss'
-]
-
 def get_latest_news():
+    feeds = [
+        "http://feeds.bbci.co.uk/news/rss.xml",
+        "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+        "https://www.thehindu.com/news/national/feeder/default.rss"
+    ]
+
     news_items = []
-    for url in RSS_FEEDS:
-        feed = feedparser.parse(url)
-        for entry in feed.entries[:5]:
-            news_items.append({
-                'title': entry.title,
-                'summary': entry.get('summary', '')[:200],
-                'link': entry.link,
-                'image': entry.get('media_content', [{'url': ''}])[0]['url'] if entry.get('media_content') else '',
-                'source': feed.feed.title
-            })
+
+    for feed_url in feeds:
+        try:
+            parsed_feed = feedparser.parse(feed_url)
+            for entry in parsed_feed.entries[:5]:  # Top 5 from each source
+                news_items.append({
+                    'title': entry.get('title', ''),
+                    'link': entry.get('link', ''),
+                    'summary': entry.get('summary', '')[:200] + '...',
+                    'source': parsed_feed.feed.get('title', 'Unknown Source')
+                })
+        except Exception as e:
+            print(f"Failed to fetch from {feed_url}: {e}")
+
     return news_items
