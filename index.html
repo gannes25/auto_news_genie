@@ -1,0 +1,44 @@
+<!-- auto_news_genie/templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoNews Genie</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container py-4">
+    <h1 class="text-center mb-4">AutoNews Genie 📰</h1>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      {% for item in news %}
+      <div class="col">
+        <div class="card h-100">
+          {% if item.image %}<img src="{{ item.image }}" class="card-img-top" alt="News Image">{% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ item.title }}</h5>
+            <p class="card-text">{{ item.summary }}...</p>
+            <a href="{{ item.link }}" class="btn btn-primary" target="_blank">Read More</a>
+          </div>
+          <div class="card-footer text-muted">Source: {{ item.source }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Google AdSense Placeholder -->
+    <div class="mt-5 text-center">
+      <p><strong>Advertisement</strong></p>
+      <div style="background-color: #eee; height: 90px; width: 100%; text-align: center; line-height: 90px;">
+        [AdSense Ad Placeholder]
+      </div>
+    </div>
+
+    <!-- Affiliate Link Placeholder -->
+    <div class="mt-4">
+      <p><strong>Today’s Top Deal:</strong></p>
+      <a href="https://www.amazon.in/dp/B08N5WRWNW?tag=yourtag-21" target="_blank" class="btn btn-success">Buy Now on Amazon</a>
+    </div>
+  </div>
+</body>
+</html>
